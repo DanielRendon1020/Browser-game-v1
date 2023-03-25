@@ -1,7 +1,3 @@
-import { gsap } from "gsap";
-import { Draggable } from "gsap/Draggable";
-import { PixiPlugin } from "gsap/PixiPlugin";
-import { TextPlugin } from "gsap/TextPlugin";
 
 gsap.registerPlugin(Draggable, PixiPlugin, TextPlugin);
 
@@ -9,7 +5,7 @@ const holes = document.querySelectorAll('.add-tag')
 const tags = ['<html>', '<head>', '<body>', '<h1>', '<span>', '<script>', '<link>', '<div>', '<h2>', '<button>', '<title>', '<p>', '<h4>', '<img>', '<a>']
 const newTag = tags[Math.floor(Math.random() * tags.length)]
 
-gsap.to("h1", 1, {"text-shadow": "0px 0px 8px white"})
+gsap.to("h1", {'text-shadow' : '0px 0px 8px white', yoyo: true, repeat: -1})
 
 function start(){
 	let startWindow = document.getElementById('start-window')
@@ -21,7 +17,7 @@ function start(){
 	})
 
 }
- start()
+start()
 
 
 function randomHole(){
