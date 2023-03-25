@@ -1,22 +1,20 @@
 :root {
-    --randomTag: ''
+    --randomTag: '';
 }
+
+#start-window {
+    background-color: grey;
+}
+
+#main {
+    filter: blur(8px) brightness(0%);
+}
+
 
 #grid {
     height: 600px;
     width: 700px;
 }
-
-body {
-    background-color: lightgray;
-}
-
-/* .hole {
-    height: 200px;
-    background-color: white;
-    border: 1px solid red
-    
-} */
 
 
 
