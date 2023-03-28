@@ -1,23 +1,26 @@
 
-gsap.registerPlugin(Draggable, PixiPlugin, TextPlugin);
-
 const holes = document.querySelectorAll('.add-tag')
-const tags = ['<html>', '<head>', '<body>', '<h1>', '<span>', '<script>', '<link>', '<div>', '<h2>', '<button>', '<title>', '<p>', '<h4>', '<img>', '<a>']
+const tags = ['<html>', '<head>', '<body>', '<h1>', '<span>', '<script>', '<link>', '<div>', '<h2>', '<button>', '<title>', '<p>', '<h4>', '<img>', '<a>', '<iframe>', '<li>', '<canvas>', '<footer>', '<label>', '<nav>']
 const newTag = tags[Math.floor(Math.random() * tags.length)]
+const whackedTags = ['</html>', '</head>', '</body>', '</h1>', '</span>', '</script>', '</link>', '</div>', '</h2>', '</button>', '</title>', '</p>', '</h4>', '</img>', '</a>', '</iframe>', '</li>', '</canvas>', '</footer>', '</label>', '</nav>']
 
-gsap.to("h1", {'text-shadow' : '0px 0px 8px white', yoyo: true, repeat: -1})
+
+
+
 
 function start(){
+	gsap.to("h1", {'text-shadow' : '0px 0px 8px white', yoyo: true, repeat: -1})
 	let startWindow = document.getElementById('start-window')
 	let main = document.getElementById('main')
-	document.getElementById('start-button').addEventListener('click', function() {
-		startWindow.classList.add('d-none')
-		main.style.filter = 'none'
-
+	let startBtn = document.getElementById('start-button')
+	startBtn.addEventListener('click', function() {
+		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
+		gsap.killTweensOf("h1")
+		
 	})
 
 }
-start()
+// start()
 
 
 function randomHole(){
@@ -25,9 +28,13 @@ function randomHole(){
 		hole.textContent = ''
 	})
 
+	
 	let newHole = holes[Math.floor(Math.random() * 9)]
 	newHole.textContent = newTag
-	console.log(newHole)
+	
+	
 }
 
 randomHole()
+
+export {tags, whackedTags}
