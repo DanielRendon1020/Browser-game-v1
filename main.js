@@ -20,7 +20,7 @@ function start(){
 	})
 
 }
-// start()
+start()
 
 
 function randomHole(){
