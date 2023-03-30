@@ -12,7 +12,7 @@
 }
 
 .marquee {
-    position: absolute;
+    position: flex;
     top: 0;
     font-size: 0
 }

@@ -27,6 +27,8 @@ function htmlToText(rawStr) {
     return rawStr.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+
+
 const tagText = `<pre>${htmlToText(allRand.join(' '))}</pre>`
 
 const marqueeCont = document.querySelectorAll('.marquee-cont')
@@ -35,6 +37,11 @@ marqueeCont.forEach(span => {
     span.innerHTML = tagText
 })
 
+
+const spans = document.getElementById('spans').cloneNode(true)
+const cloneSpan = document.getElementById('marquee-div').appendChild(spans)
+
+console.log(cloneSpan)
 
 // added event listener because it doesn't get the right width
 addEventListener("load", function () {
@@ -61,3 +68,22 @@ addEventListener("load", function () {
   });
  });
 });
+
+// addEventListener("load", function () {
+//     spans.forEach(el => {
+//      let rate = 50;
+//      let distance = el.clientWidth;
+//      let style = window.getComputedStyle(el);
+//      let marginRight = parseInt(style.marginRight) || 0;
+//      let totalDistance = distance + marginRight;
+//      let time = totalDistance / rate;
+//      let container = el.parentElement;
+   
+//      gsap.to(container, time, {
+//       repeat: -1,
+//       x: '-'+totalDistance,
+//       ease: Linear.easeNone,
+//      });
+//     });
+//    });
+   
