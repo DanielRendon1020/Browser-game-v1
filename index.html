@@ -10,13 +10,13 @@
     <title>Whack-A-Tag</title>
 </head>
 <body>
-    <div id="start-window" class="rounded-4 shadow-lg">
+    <!-- <div id="start-window" class="rounded-4 shadow-lg">
         <h1 class="display-1 text-light text-center my-3 h1">Whack-A-Tag</h1>
         <h3 class="display-6 text-center my-3 mx-3">Tired of seeing those pesky HTML tags? WHACK them outta here!</h3>
         <div id="start-button" class="d-grid mt-5">
             <button type="button" class="btn btn-light mb-3 mx-3" style="--bs-btn-font-size: 2rem;">START!</button>
         </div>
-    </div>
+    </div> -->
     <div id="main">
         <h2 id="timer" class="display-4"><span>60</span></h2>
         <div id="grid" class="display-3">
@@ -32,18 +32,17 @@
         </div>
         <h2 id="score" class="display-4">Score: <span>0</span></h2>
     </div>
+    <div class="main-marquee">
+        <div class="marquee">
+            <!-- <span class="marqueeCont"></span> -->
+            <!-- <span class="marqueeCont"></span> -->
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/PixiPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/dynamic-marquee@2"
-    ></script>
-
-    <script type="text/javascript">
-      const Marquee = dynamicMarquee.Marquee;
-    </script>
     <script type="module" src="./main.js"></script>
     <script type="module" src="./background.js"></script>
 </body>

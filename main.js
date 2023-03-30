@@ -8,19 +8,19 @@ const whackedTags = ['</html>', '</head>', '</body>', '</h1>', '</span>', '</scr
 
 
 
-function start(){
-	gsap.to("h1", {'text-shadow' : '0px 0px 8px white', yoyo: true, repeat: -1})
-	let startWindow = document.getElementById('start-window')
-	let main = document.getElementById('main')
-	let startBtn = document.getElementById('start-button')
-	startBtn.addEventListener('click', function() {
-		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
-		gsap.killTweensOf("h1")
+// function start(){
+// 	gsap.to("h1", {'text-shadow' : '0px 0px 8px white', yoyo: true, repeat: -1})
+// 	let startWindow = document.getElementById('start-window')
+// 	let main = document.getElementById('main')
+// 	let startBtn = document.getElementById('start-button')
+// 	startBtn.addEventListener('click', function() {
+// 		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
+// 		gsap.killTweensOf("h1")
 		
-	})
+// 	})
 
-}
-start()
+// }
+// start()
 
 
 function randomHole(){
