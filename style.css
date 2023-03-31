@@ -1,26 +1,26 @@
+:root {
+    --blur: 2px;
+}
+
+body :not(.sw) {
+    filter: blur(var(--blur));
+}
 
 .main-marquee {
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
+    position: flex;
     overflow: hidden;
     white-space: nowrap;
-    z-index: -99;
+    z-index: -10;
     /* transform: rotate(45deg); */
     -webkit-user-select: none;
 }
 
 .marquee {
-    position: flex;
-    min-width: 100%;
-    top: 0;
-    font-size: 0
+    font-size: 0;
 }
 
 .marquee-cont {
-    color: rgba(0, 0, 0, 0.192);
+    color: rgba(0, 0, 0, 0.087);
     display: inline-block;
     font-size: 50px;
     margin-right: .5rem;
@@ -34,6 +34,7 @@
     margin: 0 auto;
     width: 60%;
     background-color: grey;
+    box-shadow: 0 0 100px 100px #00000045;
     z-index: 5;
 }
 
@@ -65,7 +66,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
     box-shadow: 0 0 5px 5px #ffffff;
     -webkit-user-select: none;
     z-index: 2;
@@ -73,12 +73,18 @@
 
 #timer {
     margin-top: 5%;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 10px #ffffff;
     z-index: 2;
+}
+
+#score {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 10px #ffffff;
 }
 
 .add-tag {
     position: absolute;
-    overflow: hidden;
     transform: translateY(20%);
     z-index: -1;
     -webkit-user-select: none;

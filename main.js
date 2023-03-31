@@ -10,6 +10,12 @@ timer.style.visibility = 'hidden'
 let currentTime = 60
 let countDown = null
 let countDownTimer
+let blur = document.querySelector(':root')
+
+function unblur(){
+	blur.style.setProperty('--blur', '0px')
+}
+
 
 function start(){
 	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
@@ -32,7 +38,8 @@ function start(){
 		gsap.killTweensOf("h1")
 		countDown = setTimeout(() => {
 			timer.style.visibility = 'visible'
-		}, 500)
+			unblur()
+		}, 800)
 		countDownTimer = setInterval(timeLeft, 1000)
 		whacking = setTimeout(() => {
 			whack()
@@ -50,10 +57,11 @@ function whack(){
 	const hole = Math.floor(Math.random() * holes.length)
 	const newHole = holes[hole]
 	let next = null
+	// for some reason I needed to make tags random in here again for it to work
 	const newNewTag = tags[Math.floor(Math.random() * tags.length)]
 
 	newHole.innerHTML = htmlToText(newNewTag)
-	gsap.to(newHole, {transform: 'translateY(-170%)', duration:.2, ease: "back.out(2)" })
+	gsap.to(newHole, {transform: 'translateY(-170%)', z: '-5', duration:.2, ease: "back.out(2)" })
 	let getTag = tags.indexOf(newNewTag)
 
 	function shake(who) {
@@ -99,4 +107,4 @@ function shuffle(array) {
     return array;
 }
 
-export {tags, whackedTags, htmlToText, shuffle}
+export {tags, whackedTags, htmlToText, shuffle, score}
