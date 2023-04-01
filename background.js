@@ -14,7 +14,6 @@ const marqueeCont = document.querySelectorAll('.marquee-cont')
 marquee.firstElementChild.innerHTML = tagText
 marquee.lastElementChild.innerHTML = tagText
 
-console.log(marquee.firstElementChild)
 
 // function makeMore(times, original, appendTo) {
 //     for(let i = 0; i < times; i++) {

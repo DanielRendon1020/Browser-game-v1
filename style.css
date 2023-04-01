@@ -1,6 +1,6 @@
-:root {
+/* :root {
     --blur: 2px;
-}
+} */
 
 body :not(.sw) {
     filter: blur(var(--blur));
@@ -35,7 +35,7 @@ body :not(.sw) {
     width: 60%;
     background-color: grey;
     box-shadow: 0 0 100px 100px #00000045;
-    z-index: 5;
+    z-index: 10;
 }
 
 
@@ -61,14 +61,17 @@ body :not(.sw) {
     box-shadow: 0 0 50px 50px #ffffff;
 }
 
+
 .square {
     position: relative;
     display: flex;
+    padding: .4rem;
     justify-content: center;
     align-items: center;
+    background-color: #ffffff;
     box-shadow: 0 0 5px 5px #ffffff;
     -webkit-user-select: none;
-    z-index: 2;
+    z-index: 6;
 }
 
 #timer {
@@ -85,7 +88,12 @@ body :not(.sw) {
 
 .add-tag {
     position: absolute;
-    transform: translateY(20%);
+    transform: translateY(-20%);
     z-index: -1;
+    background-color: #ffffff;
     -webkit-user-select: none;
+}
+
+.hole {
+    z-index: 1;
 }
