@@ -4,30 +4,66 @@
 
 
 
-body :not(.sw) {
+#game :not(.sw) {
     filter: blur(var(--blur));
+
 }
- body {
-    background-color: aqua;
- }
+
+body {
+   background-color: #222;
+   overflow: hidden;
+}
+
+#bg {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    top: 0;
+    overflow: hidden;
+    z-index: -10;
+}
+
 .main-marquee {
-    position: flex;
     overflow: hidden;
     white-space: nowrap;
-    z-index: -10;
-    /* transform: rotate(45deg); */
     -webkit-user-select: none;
 }
 
 .marquee {
     font-size: 0;
+    height: 50vh;
+    
 }
 
 .marquee-cont {
     color: rgba(0, 0, 0, 0.087);
     display: inline-block;
-    font-size: 50px;
+    font-size: 40vh;
     margin-right: .5rem;
+    line-height: 50vh;
+}
+
+.main-marquee2 {
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-user-select: none;
+}
+
+.marquee2 {
+    font-size: 0;
+    height: 50vh;
+}
+
+.marquee-cont2 {
+    color: rgba(0, 0, 0, 0.087);
+    display: inline-block;
+    font-size: 40vh;
+    margin-right: .5rem;
+    line-height: 50vh;
 }
 
 #start-window {
@@ -38,7 +74,6 @@ body :not(.sw) {
     margin: 0 auto;
     width: 60%;
     background-color: grey;
-    box-shadow: 0 0 100px 100px #00000045;
     z-index: 10;
 }
 
@@ -61,8 +96,8 @@ body :not(.sw) {
     grid-template-columns: repeat(3, .5fr);
     grid-template-rows: repeat(3, .5fr);
     gap: 2%;
-    background-color: #ffffff;
-    box-shadow: 0 0 50px 50px #ffffff;
+    background-color: #222;
+    box-shadow: 0 0 50px 50px #222;
 }
 
 .stretch {
@@ -71,6 +106,7 @@ body :not(.sw) {
     line-height: 1rem;
     transform:scale(8.5,2.5);
     justify-content: center;
+    color: #bbb;
     
 }
 
@@ -87,31 +123,34 @@ body :not(.sw) {
 .square1 {
     position: absolute;
     display: flex;
-    padding: 0 5rem;
+    padding: 0 5.5rem;
     justify-content: center;
     align-items: center;
     -webkit-user-select: none;
     z-index: 5;
-    color: #ffffff;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 20px #ffffff;
+    color: #222;
+    background-color: #222;
+    box-shadow: 0 0 20px 20px #222;
 }
 
 #timer {
     margin-top: 5%;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 20px #ffffff;
+    background-color: #222;
+    color: #bbb;
+    box-shadow: 0 0 20px 20px #222;
     z-index: 2;
 }
 
 #score {
     margin-top: 1rem;
-    background-color: #ffffff;
-    box-shadow: 0 0 20px 20px #ffffff;
+    color: #bbb;
+    background-color: #222;
+    box-shadow: 0 0 20px 20px #222;
 }
 
 .add-tag {
     position: absolute;
+    color: #bbb;
     z-index: -1;
     -webkit-user-select: none;
 }

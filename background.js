@@ -1,9 +1,8 @@
 import {tags, whackedTags, htmlToText, shuffle, score} from './main.js'
 
 const allRand = shuffle([...tags, ...whackedTags])
-
-const newRandTags = shuffle(allRand)
-const newRandTagsText = htmlToText(newRandTags.join(' '))
+const moreShuffle = shuffle([...tags, ...whackedTags])
+const newRandTagsText = htmlToText(moreShuffle.join(' '))
 const tagText = htmlToText(allRand.join(' '))
 
 
@@ -11,17 +10,14 @@ const mainMarquee = document.querySelector('.main-marquee')
 const marquee = document.querySelector('.marquee')
 const marqueeCont = document.querySelectorAll('.marquee-cont')
 
+const marquee2 = document.querySelector('.marquee2')
+const marqueeCont2 = document.querySelectorAll('.marquee-cont2')
+
 marquee.firstElementChild.innerHTML = tagText
 marquee.lastElementChild.innerHTML = tagText
 
-
-// function makeMore(times, original, appendTo) {
-//     for(let i = 0; i < times; i++) {
-//         let clone = original.cloneNode(true)
-//         appendTo.append(clone);
-//     }
-// }
-
+marquee2.firstElementChild.innerHTML = newRandTagsText
+marquee2.lastElementChild.innerHTML = newRandTagsText
 
 
 // added event listener because it doesn't get the right width
@@ -50,21 +46,17 @@ addEventListener("load", function () {
     });
 });
 
-// addEventListener("load", function () {
-//     spans.forEach(el => {
-//      let rate = 50;
-//      let distance = el.clientWidth;
-//      let style = window.getComputedStyle(el);
-//      let marginRight = parseInt(style.marginRight) || 0;
-//      let totalDistance = distance + marginRight;
-//      let time = totalDistance / rate;
-//      let container = el.parentElement;
-   
-//      gsap.to(container, time, {
-//       repeat: -1,
-//       x: '-'+totalDistance,
-//       ease: Linear.easeNone,
-//      });
-//     });
-//    });
+addEventListener("load", function () {
+    marqueeCont2.forEach(el => {
+        let rate = 50;
+        let distance = el.clientWidth;
+        let style = window.getComputedStyle(el);
+        let marginRight = parseInt(style.marginRight) || 0;
+        let totalDistance = distance + marginRight;
+        let time = totalDistance / rate;
+        let container = el.parentElement;
+        gsap.set(container, {x: -distance })
+        gsap.to(container, time, {repeat: -1, x: '+='+totalDistance, ease: Linear.easeNone})
+    });
+   });
    
