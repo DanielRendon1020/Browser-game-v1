@@ -1,11 +1,15 @@
-/* :root {
+:root {
     --blur: 2px;
-} */
+}
+
+
 
 body :not(.sw) {
     filter: blur(var(--blur));
 }
-
+ body {
+    background-color: aqua;
+ }
 .main-marquee {
     position: flex;
     overflow: hidden;
@@ -61,36 +65,54 @@ body :not(.sw) {
     box-shadow: 0 0 50px 50px #ffffff;
 }
 
+.stretch {
+    writing-mode:vertical-rl;
+    left: 45%;
+    line-height: 1rem;
+    transform:scale(8.5,2.5);
+    justify-content: center;
+    
+}
 
 .square {
     position: relative;
     display: flex;
-    padding: .4rem;
+    padding: 0 3rem;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
-    box-shadow: 0 0 5px 5px #ffffff;
     -webkit-user-select: none;
     z-index: 6;
+}
+
+.square1 {
+    position: absolute;
+    display: flex;
+    padding: 0 5rem;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+    z-index: 5;
+    color: #ffffff;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px 20px #ffffff;
 }
 
 #timer {
     margin-top: 5%;
     background-color: #ffffff;
-    box-shadow: 0 0 10px 10px #ffffff;
+    box-shadow: 0 0 20px 20px #ffffff;
     z-index: 2;
 }
 
 #score {
+    margin-top: 1rem;
     background-color: #ffffff;
-    box-shadow: 0 0 10px 10px #ffffff;
+    box-shadow: 0 0 20px 20px #ffffff;
 }
 
 .add-tag {
     position: absolute;
-    transform: translateY(-20%);
     z-index: -1;
-    background-color: #ffffff;
     -webkit-user-select: none;
 }
 

@@ -17,62 +17,71 @@ function unblur(){
 }
 
 
-// function start(){
-// 	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
-// 	let startWindow = document.getElementById('start-window')
+function start(){
+	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
+	let startWindow = document.getElementById('start-window')
 
-// 	let whacking = null
+	let whacking = null
 
-// 	function timeLeft(){
-// 		currentTime--
-// 		timer.textContent = currentTime
-// 		if(currentTime === 0){
-// 			clearInterval(countDownTimer)
-// 		}
-// 	}
+	function timeLeft(){
+		currentTime--
+		timer.textContent = currentTime
+		if(currentTime === 0){
+			clearInterval(countDownTimer)
+		}
+	}
 	
 
-// 	let startBtn = document.getElementById('start-button')
-// 	startBtn.addEventListener('click', function() {
-// 		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
-// 		gsap.killTweensOf("h1")
-// 		countDown = setTimeout(() => {
-// 			timer.style.visibility = 'visible'
-// 			unblur()
-// 		}, 800)
-// 		countDownTimer = setInterval(timeLeft, 1000)
-// 		whacking = setTimeout(() => {
-// 			whack()
-// 		}, 1500)
+	let startBtn = document.getElementById('start-button')
+	startBtn.addEventListener('click', function() {
+		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
+		gsap.killTweensOf("h1")
+		countDown = setTimeout(() => {
+			timer.style.visibility = 'visible'
+			unblur()
+		}, 800)
+		countDownTimer = setInterval(timeLeft, 1000)
+		whacking = setTimeout(() => {
+			whack()
+		}, 1500)
 
-// 	})
+	})
 
-// }
-// start()
+}
+start()
+
+let prevHole = []
 
 function whack(){
 	if(currentTime === 0){
 		return
 	}
-	const hole = notTheSameHole(tags)
+	let hole = notTheSameHole(holes)
 
 	function notTheSameHole(array){
-		let old
-		let new
-		let current = Math.floor(Math.random() * array.length)
-		while(old != current){
-			new === current 
+		let shuffledHoles = shuffle(array)
+		let firstTwo = shuffledHoles.slice(0, 2)
+		let currHole = firstTwo[0]
+		let nextHole = firstTwo[1]
+		function addPrev(notSame){
+			prevHole.splice(0, 1, notSame)
 		}
-		
-		if(output === output){
-			output++
+		// console.log(prevHole)
+		// console.log(currHole)
+		// console.log(nextHole)
+		while(currHole !== prevHole[0]){
+			addPrev(currHole)
+			return currHole
+		}
+		if(currHole === prevHole[0]){
+			addPrev(nextHole)
+			return nextHole
 		}
 	}
 
-	const newHole = holes[hole]
-	console.log(hole)
+	const newHole = hole
 	let next = null
-	
+
 	// for some reason I needed to make tags random in here again for it to work
 	const newNewTag = tags[Math.floor(Math.random() * tags.length)]
 
@@ -88,19 +97,20 @@ function whack(){
 		score++
 		scoreCount.textContent = score
 		newHole.innerHTML = htmlToText(whackedTags[getTag])
-		shake(newHole)
+		shake(hole)
 	}, {once:true})
 	
 	next = setTimeout(() => {
-		gsap.to(newHole, {transform: 'translateY(20%)', duration: .4, ease: "back.in(2)"})
+		gsap.to(newHole, {transform: 'translateY(-10%)', duration: .4, ease: "back.in(2)"})
+		
 		whack()
-	}, 1500)
+	}, 1000)
 
 }
-whack()
+// whack()
 
 function htmlToText(rawStr) {
-    return rawStr.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return rawStr.replace(/</g, "&lt;").replace(/>/g, "&gt;")
 }
 
 function shuffle(array) {
