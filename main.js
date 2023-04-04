@@ -5,50 +5,59 @@ const newTag = tags[Math.floor(Math.random() * tags.length)]
 const whackedTags = ['</html>', '</head>', '</body>', '</h1>', '</span>', '</script>', '</link>', '</div>', '</h2>', '</button>', '</title>', '</p>', '</h4>', '</img>', '</a>', '</iframe>', '</li>', '</canvas>', '</footer>', '</label>', '</nav>']
 const scoreCount = document.querySelector('#score span')
 let score = 0
+let countDownTimer
+let currentTime = 10
+let countDown = null
+let whacking = null
+let next = null
+
+
 let timer = document.querySelector('#count-down')
 timer.style.visibility = 'hidden'
-let currentTime = 60
-let countDown = null
-let countDownTimer
-let blur = document.querySelector(':root')
 
-function unblur(){
-	blur.style.setProperty('--blur', '0px')
+function timeLeft(){
+	currentTime--
+	timer.textContent = currentTime
+	if(currentTime === 0){
+		clearInterval(countDownTimer)
+		scoreBoard()
+	}
 }
 
-
-function start(){
+addEventListener("load", startWindow, {once:true})
+function startWindow(){
 	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
 	let startWindow = document.getElementById('start-window')
-
-	let whacking = null
-
-	function timeLeft(){
-		currentTime--
-		timer.textContent = currentTime
-		if(currentTime === 0){
-			clearInterval(countDownTimer)
-		}
-	}
-	
 
 	let startBtn = document.getElementById('start-button')
 	startBtn.addEventListener('click', function() {
 		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
 		gsap.killTweensOf("h1")
-		countDown = setTimeout(() => {
-			timer.style.visibility = 'visible'
-			unblur()
-		}, 800)
-		countDownTimer = setInterval(timeLeft, 1000)
-		whacking = setTimeout(() => {
-			whack()
-		}, 1500)
-
+		startGame()
 	})
-
 }
-start()
+
+
+function startGame(){
+	scoreCount.innerHTML = '0'
+	score = 0
+	countDown = null
+	whacking = null
+	next = null
+	currentTime = 10
+	clearInterval(countDownTimer)
+	clearTimeout(countDown)
+	clearTimeout(whacking)
+
+	countDown = setTimeout(() => {
+		timer.style.visibility = 'visible'
+	}, 800)
+	countDownTimer = setInterval(timeLeft, 1000)
+	whacking = setTimeout(() => {
+		whack()
+	}, 1500)
+}
+
 
 let prevHole = []
 
@@ -79,35 +88,80 @@ function whack(){
 		}
 	}
 
-	const newHole = hole
-	let next = null
+	const tagPop = hole
 
 	// for some reason I needed to make tags random in here again for it to work
 	const newNewTag = tags[Math.floor(Math.random() * tags.length)]
 
-	newHole.innerHTML = htmlToText(newNewTag)
-	gsap.to(newHole, {transform: 'translateY(-170%)', z: '-5', duration:.5, ease: "back.out(2)" })
+	tagPop.innerHTML = htmlToText(newNewTag)
+	gsap.to(tagPop, {transform: 'translateY(-170%)', z: '-5', duration:.5, ease: "back.out(2)" })
 	let getTag = tags.indexOf(newNewTag)
 
 	function shake(who) {
 		gsap.fromTo(who, 0.01, {x:-2,}, {x:2, repeat:20})
 	}
 
-	newHole.addEventListener('click', () => {
+	tagPop.addEventListener('click', () => {
 		score++
 		scoreCount.textContent = score
-		newHole.innerHTML = htmlToText(whackedTags[getTag])
+		tagPop.innerHTML = htmlToText(whackedTags[getTag])
 		shake(hole)
 	}, {once:true})
 	
 	next = setTimeout(() => {
-		gsap.to(newHole, {transform: 'translateY(-10%)', duration: .4, ease: "back.in(2)"})
+		gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .4, ease: "back.in(2)"})
 		
 		whack()
 	}, 1000)
 
 }
-// whack()
+
+
+// document.getElementById('add-name').placeholder = `Your score: ${score}`
+function scoreBoard(){
+	const board = document.getElementById('score-board')
+	board.style.visibility = 'visible'
+	gsap.set(board, {scale: 0})
+	gsap.to(board, {scale:1, duration: 0.8, ease: 'back.out'})
+
+	const prevList = []
+	const prevName = document.querySelector('#score-1')
+	
+	const nameInput = document.getElementById('add-name')
+	nameInput.placeholder = `Your score: ${score}`
+	const name = document.getElementById('add-name')
+	
+	document.getElementById('submit').addEventListener('click', function(){
+		let playerName = name.value
+		if(playerName === ''){
+			playerName = '😶‍🌫️'
+		}
+
+		let prevGame = `<strong>${playerName}</strong><span class="badge bg-primary rounded-pill">${score}</span>`
+		prevList.push(prevGame)
+		nameInput.value = ''
+		nameInput.placeholder = '👍'
+		window.localStorage.setItem("database", prevList.join(" "))
+		let getPrevScore = JSON.parse(window.localStorage.getItem('results'))
+		window.localStorage.setItem('results', JSON.stringify(getPrevScore))
+
+	}, {once:true})
+	
+	prevName.innerHTML = window.localStorage.getItem("database")
+
+	
+	// const scoreList = document.getElementById('top-five')
+
+	const playAgain = document.getElementById('play-again')
+	playAgain.addEventListener('click', function(){
+		gsap.to(board, {scale:0, duration: 0.8, ease: 'back.in'})
+		startGame()
+		
+	})
+	
+}
+
+
 
 function htmlToText(rawStr) {
     return rawStr.replace(/</g, "&lt;").replace(/>/g, "&gt;")

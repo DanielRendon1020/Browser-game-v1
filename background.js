@@ -24,7 +24,7 @@ marquee2.lastElementChild.innerHTML = newRandTagsText
 addEventListener("load", function () {
     marqueeCont.forEach(el => {
         // set a default rate, the higher the value, the faster it is
-        let rate = 50;
+        let rate = 80;
         // get the width of the element
         let distance = el.clientWidth;
         // get the margin-right of the element
@@ -48,7 +48,7 @@ addEventListener("load", function () {
 
 addEventListener("load", function () {
     marqueeCont2.forEach(el => {
-        let rate = 50;
+        let rate = 80;
         let distance = el.clientWidth;
         let style = window.getComputedStyle(el);
         let marginRight = parseInt(style.marginRight) || 0;

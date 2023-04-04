@@ -15,7 +15,7 @@
             <h1 class="display-1 text-light text-center my-3 h1 sw">Whack-A-Tag</h1>
             <h3 class="display-6 text-center my-3 mx-3 text-light sw">Tired of seeing those pesky HTML tags?<small class="sw" style="writing-mode:vertical-rl; font-size: x-small;">(i am)</small> WHACK them outta here as they pop up!</h3>
             <div id="start-button" class="d-grid mt-5 sw">
-                <button type="button" class="btn btn-light mb-3 mx-3 sw" style="--bs-btn-font-size: 2rem;">WHACK!</button>
+                <button type="button" class="btn btn-primary mb-3 mx-3 sw" style="--bs-btn-font-size: 2rem;">WHACK!</button>
             </div>
         </div>
         <div id="main">
@@ -68,6 +68,26 @@
                 </div>
             </div>
             <h2 id="score" class="display-4">Score: <span>0</span></h2>
+            <div id="score-board" class="rounded-4 sw ">
+                <h2 class="display-1 text-light text-center">Times Up!</h2>
+                <h5 class="display-5 text-light text-center">Add your score</h5>
+                <div class="form-group mb-3">
+                    <label for="player" class="text-light">Name:</label>
+                    <input type="text" class="form-control" id="add-name" placeholder="">
+                    <div class="d-grid">
+                        <button type="button" id="submit" class="btn btn-light btn-block mt-2">Add Score</button>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" id="play-again" class="btn btn-primary btn-block mt-2">Play Again</button>
+                    </div>
+                </div>
+                
+                <h5 class="display-5 text-light text-center">Previous Score</h5>
+                <ul id="top-five" class="list-group mt-2">
+                    <li id="score-1" class="list-group-item d-flex justify-content-around align-items-center">
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div id="bg">

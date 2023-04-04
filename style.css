@@ -1,13 +1,4 @@
-:root {
-    --blur: 2px;
-}
 
-
-
-#game :not(.sw) {
-    filter: blur(var(--blur));
-
-}
 
 body {
    background-color: #222;
@@ -15,6 +6,7 @@ body {
 }
 
 #bg {
+    filter: blur(3px);
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -40,7 +32,7 @@ body {
 }
 
 .marquee-cont {
-    color: rgba(0, 0, 0, 0.087);
+    color: rgba(0, 0, 0, 0.164);
     display: inline-block;
     font-size: 40vh;
     margin-right: .5rem;
@@ -59,14 +51,14 @@ body {
 }
 
 .marquee-cont2 {
-    color: rgba(0, 0, 0, 0.087);
+    color: rgba(0, 0, 0, 0.164);
     display: inline-block;
     font-size: 40vh;
     margin-right: .5rem;
     line-height: 50vh;
 }
 
-#start-window {
+#start-window, #score-board {
     position: absolute;
     left: 0;
     right: 0;
@@ -75,6 +67,23 @@ body {
     width: 60%;
     background-color: grey;
     z-index: 10;
+}
+#score-board {
+    position: absolute;
+    padding: 3rem;
+    align-items: center;
+    text-align: left;
+    left: 0;
+    right: 0;
+    top: 20%;
+    margin: 0 auto;
+    width: 60%;
+    background-color: grey;
+    z-index: 15;
+}
+
+#score-board {
+    visibility: hidden;
 }
 
 
@@ -158,3 +167,4 @@ body {
 .hole {
     z-index: 1;
 }
+
