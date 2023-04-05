@@ -10,7 +10,7 @@ let currentTime
 let countDown 
 let whacking
 let next 
-
+let quickerTime
 
 let timer = document.querySelector('#count-down')
 
@@ -23,7 +23,7 @@ function timeLeft(){
 	}
 }
 
-addEventListener("load", startWindow)
+addEventListener("load", startWindow, {once:true})
 
 function startWindow(){
 	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
@@ -37,7 +37,7 @@ function startWindow(){
 	}, {once:true})
 }
 
-let quickerTime = 1500
+// let quickerTime = 1500
 
 function fastTags(){
 	quickerTime = quickerTime * .957
@@ -55,23 +55,24 @@ function updateScore(el, i){
 }
 
 function startGame(){
-	scoreCount.innerHTML = '0'
+	quickerTime = 1500
 	score = 0
+	scoreCount.innerHTML = '0'
 	countDown = null
 	whacking = null
 	next = null
 	currentTime = 30
+	clearTimeout(next)
 	clearInterval(countDownTimer)
 	clearTimeout(countDown)
 	clearTimeout(whacking)
-	quickerTime = 1500
 
 
 	countDownTimer = setInterval(timeLeft, 1000)
 
 	whacking = setTimeout(() => {
 		whack()
-	}, quickerTime)
+	}, 800)
 }
 
 let prevHole = []
@@ -110,25 +111,26 @@ function whack(){
 	let getTag = tags.indexOf(newNewTag)
 
 
-	updateScore(tagPop, getTag)
-
-	tagPop.addEventListener('click', updateScore, {once:true})
+	tagPop.addEventListener('click', () => {
+		updateScore(tagPop, getTag)
+	}, {once:true})
 
 	
 	fastTags()
 
 	if(currentTime === 0){
-		clearTimeout(whacking)
-		clearTimeout(next)
-		tagPop.removeEventListener('click', updateScore)
+		quickerTime = 1500
+		tagPop.removeEventListener('click', () => {
+			updateScore(tagPop, getTag)
+		}, {once:true})
 		tagPop.innerHTML = ''
-		score = 0
 		return
 	}
 
-	// gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .3, ease: "back.in(2)"})
-
 	next = setTimeout(() => {
+		tagPop.removeEventListener('click', () => {
+			updateScore(tagPop, getTag)
+		})
 		gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .3, ease: "back.in(2)"})
 		whack()
 	}, quickerTime)
@@ -172,7 +174,7 @@ function scoreBoard(){
 	const name = document.getElementById('add-name')
 	const addScoreBtn = document.getElementById('submit')
 	
-	addScoreBtn.addEventListener('click', function(){
+	function savePrev(){
 		let playerName = name.value
 		if(playerName === ''){
 			playerName = '😶‍🌫️'
@@ -187,8 +189,9 @@ function scoreBoard(){
 		window.localStorage.setItem("database", prevList.join(" "))
 		let getPrevScore = JSON.parse(window.localStorage.getItem('results'))
 		window.localStorage.setItem('results', JSON.stringify(getPrevScore))
+	}
 
-	}, {once:true})
+	addScoreBtn.addEventListener('click', savePrev, {once:true})
 	
 	prevName.innerHTML = window.localStorage.getItem("database")
 
@@ -198,6 +201,7 @@ function scoreBoard(){
 		gsap.to(board, {scale:0, duration: 0.8, ease: 'back.in'})
 		addScoreBtn.classList.remove('disabled')
 		nameInput.removeAttribute('disabled')
+		addScoreBtn.removeEventListener('click', savePrev, {once:true})
 		startGame()
 	}, {once: true})
 	

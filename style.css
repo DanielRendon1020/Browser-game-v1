@@ -160,7 +160,6 @@ body {
 .add-tag {
     position: absolute;
     color: #bbb;
-    background-color: #222;
     z-index: -1;
     -webkit-user-select: none;
 }
