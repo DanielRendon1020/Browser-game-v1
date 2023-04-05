@@ -4,16 +4,15 @@ const tags = ['<html>', '<head>', '<body>', '<h1>', '<span>', '<script>', '<link
 const newTag = tags[Math.floor(Math.random() * tags.length)]
 const whackedTags = ['</html>', '</head>', '</body>', '</h1>', '</span>', '</script>', '</link>', '</div>', '</h2>', '</button>', '</title>', '</p>', '</h4>', '</img>', '</a>', '</iframe>', '</li>', '</canvas>', '</footer>', '</label>', '</nav>']
 const scoreCount = document.querySelector('#score span')
-let score = 0
+let score
 let countDownTimer
-let currentTime = 10
-let countDown = null
-let whacking = null
-let next = null
+let currentTime 
+let countDown 
+let whacking
+let next 
 
 
 let timer = document.querySelector('#count-down')
-timer.style.visibility = 'hidden'
 
 function timeLeft(){
 	currentTime--
@@ -24,7 +23,8 @@ function timeLeft(){
 	}
 }
 
-addEventListener("load", startWindow, {once:true})
+addEventListener("load", startWindow)
+
 function startWindow(){
 	gsap.to("h1", {'text-shadow' : '0px 0px 10px white', yoyo: true, repeat: -1})
 	let startWindow = document.getElementById('start-window')
@@ -34,9 +34,25 @@ function startWindow(){
 		gsap.to(startWindow, {duration: .8, scale: 0, ease: 'back.in'})
 		gsap.killTweensOf("h1")
 		startGame()
-	})
+	}, {once:true})
 }
 
+let quickerTime = 1500
+
+function fastTags(){
+	quickerTime = quickerTime * .957
+}
+
+function shake(el) {
+	gsap.fromTo(el, 0.02, {rotation: -10}, {rotation: 0, repeat: 15})
+}
+
+function updateScore(el, i){
+	score++
+	scoreCount.textContent = score
+	el.innerHTML = htmlToText(whackedTags[i])
+	shake(el)
+}
 
 function startGame(){
 	scoreCount.innerHTML = '0'
@@ -44,49 +60,45 @@ function startGame(){
 	countDown = null
 	whacking = null
 	next = null
-	currentTime = 10
+	currentTime = 30
 	clearInterval(countDownTimer)
 	clearTimeout(countDown)
 	clearTimeout(whacking)
+	quickerTime = 1500
 
-	countDown = setTimeout(() => {
-		timer.style.visibility = 'visible'
-	}, 800)
+
 	countDownTimer = setInterval(timeLeft, 1000)
+
 	whacking = setTimeout(() => {
 		whack()
-	}, 1500)
+	}, quickerTime)
 }
-
 
 let prevHole = []
 
-function whack(){
-	if(currentTime === 0){
-		return
+function notTheSame(array){
+	let shuffledHoles = shuffle(array)
+	let firstTwo = shuffledHoles.slice(0, 2)
+	let currHole = firstTwo[0]
+	let nextHole = firstTwo[1]
+	function addPrev(notSame){
+		prevHole.splice(0, 1, notSame)
 	}
-	let hole = notTheSameHole(holes)
+	// console.log(prevHole)
+	// console.log(currHole)
+	// console.log(nextHole)
+	while(currHole !== prevHole[0]){
+		addPrev(currHole)
+		return currHole
+	}
+	if(currHole === prevHole[0]){
+		addPrev(nextHole)
+		return nextHole
+	}
+}
 
-	function notTheSameHole(array){
-		let shuffledHoles = shuffle(array)
-		let firstTwo = shuffledHoles.slice(0, 2)
-		let currHole = firstTwo[0]
-		let nextHole = firstTwo[1]
-		function addPrev(notSame){
-			prevHole.splice(0, 1, notSame)
-		}
-		// console.log(prevHole)
-		// console.log(currHole)
-		// console.log(nextHole)
-		while(currHole !== prevHole[0]){
-			addPrev(currHole)
-			return currHole
-		}
-		if(currHole === prevHole[0]){
-			addPrev(nextHole)
-			return nextHole
-		}
-	}
+function whack(){
+	let hole = notTheSame(holes)
 
 	const tagPop = hole
 
@@ -94,30 +106,58 @@ function whack(){
 	const newNewTag = tags[Math.floor(Math.random() * tags.length)]
 
 	tagPop.innerHTML = htmlToText(newNewTag)
-	gsap.to(tagPop, {transform: 'translateY(-170%)', z: '-5', duration:.5, ease: "back.out(2)" })
+	gsap.to(tagPop, {transform: 'translateY(-170%)', duration:.3, ease: "back.out(2)" })
 	let getTag = tags.indexOf(newNewTag)
 
-	function shake(who) {
-		gsap.fromTo(who, 0.01, {x:-2,}, {x:2, repeat:20})
+
+	updateScore(tagPop, getTag)
+
+	tagPop.addEventListener('click', updateScore, {once:true})
+
+	
+	fastTags()
+
+	if(currentTime === 0){
+		clearTimeout(whacking)
+		clearTimeout(next)
+		tagPop.removeEventListener('click', updateScore)
+		tagPop.innerHTML = ''
+		score = 0
+		return
 	}
 
-	tagPop.addEventListener('click', () => {
-		score++
-		scoreCount.textContent = score
-		tagPop.innerHTML = htmlToText(whackedTags[getTag])
-		shake(hole)
-	}, {once:true})
-	
+	// gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .3, ease: "back.in(2)"})
+
 	next = setTimeout(() => {
-		gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .4, ease: "back.in(2)"})
-		
+		gsap.to(tagPop, {transform: 'translateY(-10%)', duration: .3, ease: "back.in(2)"})
 		whack()
-	}, 1000)
+	}, quickerTime)
+	
 
 }
 
 
-// document.getElementById('add-name').placeholder = `Your score: ${score}`
+// function moreTags(){
+// 	const tagShowerBg = document.createElement('div')
+// 	tagShowerBg.setAttribute('class', 'tag-shower')
+// 	document.body.appendChild(tagShower)
+// 	const tagShower = document.createElement('div')
+// 	let tag
+// 	let i
+
+// 	for(i = 0; i < 50; i++){
+// 		tag = document.createElement('div')
+// 		tag.innerHTML = htmlToText('<more-tags>')
+// 		tag.setAttribute('class', 'rain-tags')
+// 		tag.classList.add('text-center', 'text-light', 'display-5')
+// 		tagShower.appendChild(tag)
+// 	}
+
+// }
+// moreTags()
+
+
+
 function scoreBoard(){
 	const board = document.getElementById('score-board')
 	board.style.visibility = 'visible'
@@ -130,8 +170,9 @@ function scoreBoard(){
 	const nameInput = document.getElementById('add-name')
 	nameInput.placeholder = `Your score: ${score}`
 	const name = document.getElementById('add-name')
+	const addScoreBtn = document.getElementById('submit')
 	
-	document.getElementById('submit').addEventListener('click', function(){
+	addScoreBtn.addEventListener('click', function(){
 		let playerName = name.value
 		if(playerName === ''){
 			playerName = '😶‍🌫️'
@@ -141,6 +182,8 @@ function scoreBoard(){
 		prevList.push(prevGame)
 		nameInput.value = ''
 		nameInput.placeholder = '👍'
+		this.classList.add('disabled')
+		nameInput.setAttribute('disabled', '')
 		window.localStorage.setItem("database", prevList.join(" "))
 		let getPrevScore = JSON.parse(window.localStorage.getItem('results'))
 		window.localStorage.setItem('results', JSON.stringify(getPrevScore))
@@ -149,15 +192,14 @@ function scoreBoard(){
 	
 	prevName.innerHTML = window.localStorage.getItem("database")
 
-	
-	// const scoreList = document.getElementById('top-five')
 
 	const playAgain = document.getElementById('play-again')
 	playAgain.addEventListener('click', function(){
 		gsap.to(board, {scale:0, duration: 0.8, ease: 'back.in'})
+		addScoreBtn.classList.remove('disabled')
+		nameInput.removeAttribute('disabled')
 		startGame()
-		
-	})
+	}, {once: true})
 	
 }
 
